@@ -16,6 +16,7 @@
 #include <ostream>
 #include <string_view>
 #include <vector>
+#include <string>
 
 namespace MereTDD
 {
@@ -33,6 +34,34 @@ namespace MereTDD
 
 	private:
 		std::string m_ex_type;
+	};
+
+	class ConfirmException
+	{
+	public:
+		ConfirmException() = default;
+
+		virtual ~ConfirmException() = default;
+
+		[[nodiscard]] std::string_view reason() const
+		{
+			return m_reason;
+		}
+
+	protected:
+		std::string m_reason;
+	};
+
+	class BoolConfirmException : public ConfirmException
+	{
+	public:
+		BoolConfirmException(bool expected, int line)
+		{
+			m_reason = "Confirm failed on line ";
+			m_reason += std::to_string(line) + '\n';
+			m_reason += "    Expected: ";
+			m_reason += expected ? "true" : "false";
+		}
 	};
 
 	class TestBase
@@ -114,6 +143,10 @@ namespace MereTDD
 			try
 			{
 				test->run_ex();
+			}
+			catch (ConfirmException const& ex)
+			{
+				test->set_failed(ex.reason());
 			}
 			catch (MissingException const& ex)
 			{
@@ -238,3 +271,15 @@ public:                                    \
 }\
 MERETDD_CLASS MERETDD_INSTANCE(test_name); \
 void MERETDD_CLASS::run()
+
+#define CONFIRM_FALSE(actual) \
+if (actual)                   \
+{                             \
+    throw MereTDD::BoolConfirmException(false, __LINE__); \
+}
+
+#define CONFIRM_TRUE(actual)  \
+if (!actual)                   \
+{                             \
+    throw MereTDD::BoolConfirmException(false, __LINE__); \
+}
