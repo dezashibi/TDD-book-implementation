@@ -16,6 +16,6 @@
 
 TEST
 {
-	std::cout << m_name << std::endl;
+	std::cout << name() << std::endl;
 }
 

@@ -19,42 +19,79 @@
 
 namespace MereTDD
 {
-	class TestInterface
+	class TestBase
 	{
 	public:
-		virtual ~TestInterface() = default;
+		explicit TestBase(std::string_view name) : m_name(name)
+		{
+		}
+
+		virtual ~TestBase() = default;
 
 		virtual void run() = 0;
+
+		[[nodiscard]] std::string_view name() const
+		{
+			return m_name;
+		}
+
+		[[nodiscard]] bool passed() const
+		{
+			return m_passed;
+		}
+
+		[[nodiscard]] std::string_view reason() const
+		{
+			return m_reason;
+		}
+
+		void set_failed(std::string_view reason)
+		{
+			m_passed = false;
+			m_reason = reason;
+		}
+
+	private:
+		std::string m_name;
+		bool m_passed{ true };
+		std::string m_reason;
 	};
 
-	inline std::vector<TestInterface*>& get_tests()
+	inline std::vector<TestBase*>& get_tests()
 	{
-		static std::vector<TestInterface*> tests;
+		static std::vector<TestBase*> tests;
 
 		return tests;
 	}
 
 	inline void run_tests()
 	{
-		for (auto* test: get_tests()) test->run();
+		for (auto* test: get_tests())
+		{
+			try
+			{
+				test->run();
+			}
+			catch (...)
+			{
+				test->set_failed("Unexpected exception thrown.");
+			}
+		}
 	}
 }
 
 
 #define TEST \
-class Test : public MereTDD::TestInterface \
+class Test : public MereTDD::TestBase \
 {            \
 public:      \
     Test (std::string_view name)              \
-        : m_name(name)                           \
+        : TestBase(name)                      \
         {          \
             MereTDD::get_tests().push_back(this); \
         }          \
-             \
+\
         void run() override;                     \
-private:     \
-    std::string m_name;                       \
-    bool m_result{true};                       \
 };           \
 Test test("testCanBeCreated");             \
 void Test::run()
