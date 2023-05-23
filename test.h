@@ -39,7 +39,9 @@ namespace MereTDD
 	class ConfirmException
 	{
 	public:
-		ConfirmException() = default;
+		ConfirmException(int line) : m_line(line)
+		{
+		}
 
 		virtual ~ConfirmException() = default;
 
@@ -48,20 +50,47 @@ namespace MereTDD
 			return m_reason;
 		}
 
+		[[nodiscard]] int line() const
+		{
+			return m_line;
+		}
+
 	protected:
 		std::string m_reason;
+		int m_line;
 	};
 
 	class BoolConfirmException : public ConfirmException
 	{
 	public:
-		BoolConfirmException(bool expected, int line)
+		BoolConfirmException(bool expected, int line) : ConfirmException(line)
 		{
-			m_reason = "Confirm failed on line ";
-			m_reason += std::to_string(line) + '\n';
 			m_reason += "    Expected: ";
 			m_reason += expected ? "true" : "false";
 		}
+	};
+
+	class ActualConfirmException : public ConfirmException
+	{
+	public:
+		ActualConfirmException(std::string_view expected, std::string_view actual, int line) :
+				ConfirmException(line),
+				m_expected(expected),
+				m_actual(actual)
+		{
+			format_reason();
+		}
+
+	private:
+		void format_reason()
+		{
+			m_reason += "    Expected: " + m_expected + '\n';
+			m_reason += "    Actual  : " + m_actual;
+		}
+
+		std::string m_expected;
+		std::string m_actual;
+		int m_line{};
 	};
 
 	class TestBase
@@ -100,10 +129,16 @@ namespace MereTDD
 			return m_expected_reason;
 		}
 
-		void set_failed(std::string_view reason)
+		[[nodiscard]] int confirm_location() const
+		{
+			return m_confirm_location;
+		}
+
+		void set_failed(std::string_view reason, int confirm_location = -1)
 		{
 			m_passed = false;
 			m_reason = reason;
+			m_confirm_location = confirm_location;
 		}
 
 		void set_expected_failure_reason(std::string_view reason)
@@ -116,6 +151,7 @@ namespace MereTDD
 		bool m_passed{ true };
 		std::string m_reason;
 		std::string m_expected_reason;
+		int m_confirm_location{ -1 };
 	};
 
 	inline std::vector<TestBase*>& get_tests()
@@ -146,7 +182,7 @@ namespace MereTDD
 			}
 			catch (ConfirmException const& ex)
 			{
-				test->set_failed(ex.reason());
+				test->set_failed(ex.reason(), ex.line());
 			}
 			catch (MissingException const& ex)
 			{
@@ -187,8 +223,18 @@ namespace MereTDD
 			else
 			{
 				++num_failed;
-				output << "Failed\n"
-					   << test->reason()
+
+				if (test->confirm_location() != -1)
+				{
+					output << "Failed confirm on line "
+						   << test->confirm_location() << '\n';
+				}
+				else
+				{
+					output << "Failed\n";
+				}
+
+				output << test->reason()
 					   << std::endl;
 			}
 		}
@@ -214,6 +260,60 @@ namespace MereTDD
 		output << std::endl;
 
 		return num_failed;
+	}
+
+	inline void confirm(bool expected, bool actual, int line)
+	{
+		if (actual != expected)
+		{
+			throw BoolConfirmException(expected, line);
+		}
+	}
+
+	template<typename T>
+	void confirm(const T& expected, const T& actual, int line)
+	{
+		if (actual != expected)
+		{
+			throw ActualConfirmException(std::to_string(expected), std::to_string(actual), line);
+		}
+	}
+
+	inline void confirm(std::string_view expected, std::string_view actual, int line)
+	{
+		if (actual != expected)
+		{
+			throw ActualConfirmException(expected, actual, line);
+		}
+	}
+
+	inline void confirm(const std::string& expected, const std::string& actual, int line)
+	{
+		confirm(std::string_view(expected), std::string_view(actual), line);
+	}
+
+	inline void confirm(double expected, double actual, int line)
+	{
+		if (actual < (expected - 0.000001) || actual > (expected + 0.000001))
+		{
+			throw ActualConfirmException(std::to_string(expected), std::to_string(actual), line);
+		}
+	}
+
+	inline void confirm(long double expected, long double actual, int line)
+	{
+		if (actual < (expected - 0.000001) || actual > (expected + 0.000001))
+		{
+			throw ActualConfirmException(std::to_string(expected), std::to_string(actual), line);
+		}
+	}
+
+	inline void confirm(float expected, float actual, int line)
+	{
+		if (actual < (expected - 0.0001f) || actual > (expected + 0.0001f))
+		{
+			throw ActualConfirmException(std::to_string(expected), std::to_string(actual), line);
+		}
 	}
 }
 
@@ -273,13 +373,14 @@ MERETDD_CLASS MERETDD_INSTANCE(test_name); \
 void MERETDD_CLASS::run()
 
 #define CONFIRM_FALSE(actual) \
-if (actual)                   \
-{                             \
-    throw MereTDD::BoolConfirmException(false, __LINE__); \
-}
+    MereTDD::confirm(false, actual, __LINE__)
 
 #define CONFIRM_TRUE(actual)  \
-if (!actual)                   \
-{                             \
-    throw MereTDD::BoolConfirmException(false, __LINE__); \
-}
+    MereTDD::confirm(true, actual, __LINE__)
+
+#define CONFIRM(expected, actual) \
+    MereTDD::confirm(expected, actual, __LINE__)
+
+
+
+
