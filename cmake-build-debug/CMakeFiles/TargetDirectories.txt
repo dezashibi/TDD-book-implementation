@@ -1,4 +1,3 @@
-D:/knavels/c++/tdd_book/cmake-build-debug/CMakeFiles/Tests.dir
 D:/knavels/c++/tdd_book/cmake-build-debug/CMakeFiles/tdd_book.dir
 D:/knavels/c++/tdd_book/cmake-build-debug/CMakeFiles/edit_cache.dir
 D:/knavels/c++/tdd_book/cmake-build-debug/CMakeFiles/rebuild_cache.dir

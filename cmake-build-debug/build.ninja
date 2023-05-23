@@ -41,52 +41,32 @@ include CMakeFiles\rules.ninja
 
 cmake_ninja_workdir = D$:\knavels\c++\tdd_book\cmake-build-debug\
 # =============================================================================
-# Object build statements for STATIC_LIBRARY target Tests
-
-
-#############################################
-# Order-only phony target for Tests
-
-build cmake_object_order_depends_target_Tests: phony || CMakeFiles\Tests.dir
-
-build CMakeFiles\Tests.dir\tests\chapter02.cpp.obj: CXX_COMPILER__Tests_Debug D$:\knavels\c++\tdd_book\tests\chapter02.cpp || cmake_object_order_depends_target_Tests
-  FLAGS = /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -MDd -Zi -std:c++20
-  OBJECT_DIR = CMakeFiles\Tests.dir
-  OBJECT_FILE_DIR = CMakeFiles\Tests.dir\tests
-  TARGET_COMPILE_PDB = CMakeFiles\Tests.dir\Tests.pdb
-  TARGET_PDB = Tests.pdb
-
-
-# =============================================================================
-# Link build statements for STATIC_LIBRARY target Tests
-
-
-#############################################
-# Link the static library Tests.lib
-
-build Tests.lib: CXX_STATIC_LIBRARY_LINKER__Tests_Debug CMakeFiles\Tests.dir\tests\chapter02.cpp.obj
-  LANGUAGE_COMPILE_FLAGS = /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -MDd -Zi
-  LINK_FLAGS = /machine:X86
-  OBJECT_DIR = CMakeFiles\Tests.dir
-  POST_BUILD = cd .
-  PRE_LINK = cd .
-  TARGET_COMPILE_PDB = CMakeFiles\Tests.dir\Tests.pdb
-  TARGET_FILE = Tests.lib
-  TARGET_PDB = Tests.pdb
-
-# =============================================================================
 # Object build statements for EXECUTABLE target tdd_book
 
 
 #############################################
 # Order-only phony target for tdd_book
 
-build cmake_object_order_depends_target_tdd_book: phony || cmake_object_order_depends_target_Tests
+build cmake_object_order_depends_target_tdd_book: phony || CMakeFiles\tdd_book.dir
 
 build CMakeFiles\tdd_book.dir\main.cpp.obj: CXX_COMPILER__tdd_book_Debug D$:\knavels\c++\tdd_book\main.cpp || cmake_object_order_depends_target_tdd_book
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -MDd -Zi -std:c++20
   OBJECT_DIR = CMakeFiles\tdd_book.dir
   OBJECT_FILE_DIR = CMakeFiles\tdd_book.dir
+  TARGET_COMPILE_PDB = CMakeFiles\tdd_book.dir\
+  TARGET_PDB = tdd_book.pdb
+
+build CMakeFiles\tdd_book.dir\tests\chapter01.cpp.obj: CXX_COMPILER__tdd_book_Debug D$:\knavels\c++\tdd_book\tests\chapter01.cpp || cmake_object_order_depends_target_tdd_book
+  FLAGS = /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -MDd -Zi -std:c++20
+  OBJECT_DIR = CMakeFiles\tdd_book.dir
+  OBJECT_FILE_DIR = CMakeFiles\tdd_book.dir\tests
+  TARGET_COMPILE_PDB = CMakeFiles\tdd_book.dir\
+  TARGET_PDB = tdd_book.pdb
+
+build CMakeFiles\tdd_book.dir\tests\chapter02.cpp.obj: CXX_COMPILER__tdd_book_Debug D$:\knavels\c++\tdd_book\tests\chapter02.cpp || cmake_object_order_depends_target_tdd_book
+  FLAGS = /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -MDd -Zi -std:c++20
+  OBJECT_DIR = CMakeFiles\tdd_book.dir
+  OBJECT_FILE_DIR = CMakeFiles\tdd_book.dir\tests
   TARGET_COMPILE_PDB = CMakeFiles\tdd_book.dir\
   TARGET_PDB = tdd_book.pdb
 
@@ -98,10 +78,10 @@ build CMakeFiles\tdd_book.dir\main.cpp.obj: CXX_COMPILER__tdd_book_Debug D$:\kna
 #############################################
 # Link the executable tdd_book.exe
 
-build tdd_book.exe: CXX_EXECUTABLE_LINKER__tdd_book_Debug CMakeFiles\tdd_book.dir\main.cpp.obj | Tests.lib || Tests.lib
+build tdd_book.exe: CXX_EXECUTABLE_LINKER__tdd_book_Debug CMakeFiles\tdd_book.dir\main.cpp.obj CMakeFiles\tdd_book.dir\tests\chapter01.cpp.obj CMakeFiles\tdd_book.dir\tests\chapter02.cpp.obj
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -MDd -Zi
   LINK_FLAGS = /machine:X86 /debug /INCREMENTAL /subsystem:console
-  LINK_LIBRARIES = Tests.lib  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib
+  LINK_LIBRARIES = kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib
   OBJECT_DIR = CMakeFiles\tdd_book.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
@@ -136,8 +116,6 @@ build rebuild_cache: phony CMakeFiles\rebuild_cache.util
 # =============================================================================
 # Target aliases.
 
-build Tests: phony Tests.lib
-
 build tdd_book: phony tdd_book.exe
 
 # =============================================================================
@@ -148,7 +126,7 @@ build tdd_book: phony tdd_book.exe
 #############################################
 # Folder: D:/knavels/c++/tdd_book/cmake-build-debug
 
-build all: phony Tests.lib tdd_book.exe
+build all: phony tdd_book.exe
 
 # =============================================================================
 # Built-in targets

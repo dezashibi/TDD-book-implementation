@@ -9,9 +9,52 @@
     the licensing of this work. If you have any questions or concerns,
     please feel free to contact me at the email address provided above.
  ***************************************************************************************   
-    << OTHER DESCRIPTIONS >>
+    MereTDD implementations and Macros
  **************************************************************************************/
-#ifndef TDD_BOOK_TEST_H
-#define TDD_BOOK_TEST_H
+#pragma once
 
-#endif //TDD_BOOK_TEST_H
+#include <iostream>
+#include <string_view>
+#include <vector>
+
+namespace MereTDD
+{
+	class TestInterface
+	{
+	public:
+		virtual ~TestInterface() = default;
+
+		virtual void run() = 0;
+	};
+
+	inline std::vector<TestInterface*>& get_tests()
+	{
+		static std::vector<TestInterface*> tests;
+
+		return tests;
+	}
+
+	inline void run_tests()
+	{
+		for (auto* test: get_tests()) test->run();
+	}
+}
+
+
+#define TEST \
+class Test : public MereTDD::TestInterface \
+{            \
+public:      \
+    Test (std::string_view name)              \
+        : m_name(name)                           \
+        {          \
+            MereTDD::get_tests().push_back(this); \
+        }          \
+             \
+        void run() override;                     \
+private:     \
+    std::string m_name;                       \
+    bool m_result{true};                       \
+};           \
+Test test("testCanBeCreated");             \
+void Test::run()

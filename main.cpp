@@ -3,5 +3,7 @@
 
 int main()
 {
+	MereTDD::run_tests();
 
+	return 0;
 }
