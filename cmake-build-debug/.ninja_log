@@ -1,0 +1,17 @@
+# ninja log v5
+3	762	7065297364400813	CMakeFiles/tdd_book.dir/test.cpp.obj	b2175f868f4be143
+0	771	7065297364482910	CMakeFiles/tdd_book.dir/main.cpp.obj	ed19cd34eedb7bc0
+8	770	7065297364442777	CMakeFiles/tdd_book.dir/FirstBatch.cpp.obj	267e1f21fd994e1b
+666	856	7065298068034254	tdd_book.exe	a88ea81a55a67969
+0	10	0	clean	b6d18c6a8db7863f
+0	53	7065323346644105	build.ninja	67be5716def5bd2b
+3	619	7065298065986839	CMakeFiles/tdd_book.dir/SecondBatch.cpp.obj	71d91bf7748bd9d1
+0	658	7065298066368286	CMakeFiles/tdd_book.dir/ThirdBatch.cpp.obj	84ec6ef28f4ba345
+0	345	7065323401245309	CMakeFiles/Tests.dir/tests/chapter02.cpp.obj	3ee3275500ec057e
+353	397	7065323401737900	Tests.lib	1768676b0e234429
+4	778	7065323405565124	CMakeFiles/tdd_book.dir/main.cpp.obj	ed19cd34eedb7bc0
+778	950	7065323406954873	tdd_book.exe	9d6d080376ee3938
+0	185	7065323983380897	CMakeFiles/Tests.dir/tests/chapter02.cpp.obj	3ee3275500ec057e
+186	230	7065323983821064	Tests.lib	1768676b0e234429
+5	586	7065323987387693	CMakeFiles/tdd_book.dir/main.cpp.obj	ed19cd34eedb7bc0
+587	700	7065323988286774	tdd_book.exe	9d6d080376ee3938
