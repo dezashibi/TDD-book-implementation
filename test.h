@@ -131,7 +131,7 @@ namespace MereTDD
 			{
 				if (!test->expected_reason().empty())
 				{
-					// This test passed but it was supposed
+					// This test passed, but it was supposed
 					// to have failed.
 					++num_missed_failed;
 					output << "Missed expected failure\n"
@@ -194,6 +194,7 @@ namespace MereTDD
 
 
 #define TEST(test_name) \
+namespace {\
 class MERETDD_CLASS : public MereTDD::TestBase \
 {            \
 public:      \
@@ -204,12 +205,14 @@ public:      \
         }          \
 \
         void run() override;                     \
-};           \
+};                      \
+}\
 MERETDD_CLASS MERETDD_INSTANCE(test_name);\
 void MERETDD_CLASS::run()
 
 
 #define TEST_EX(test_name, exception_type) \
+namespace {\
 class MERETDD_CLASS : public MereTDD::TestBase \
 {                                          \
 public:                                    \
@@ -232,5 +235,6 @@ public:                                    \
         }                                        \
         void run() override;                    \
 };                                         \
+}\
 MERETDD_CLASS MERETDD_INSTANCE(test_name); \
 void MERETDD_CLASS::run()

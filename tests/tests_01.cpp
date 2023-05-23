@@ -14,6 +14,8 @@
 
 #include "../test.h"
 
+// force this to be on line 19 to test Tests with same name "Test19"
+// this has been resolved by adding unnamed namespace around each test
 TEST("Test can be created")
 {
 }
