@@ -1,5 +1,5 @@
 /***************************************************************************************
-    File: chapter01.cpp
+    File: tests_02.cpp
     Author: Navid Dezashibi
     Initial Creation Date: 2023-05-23
     Contact: navid@dezashibi.com
@@ -9,17 +9,8 @@
     the licensing of this work. If you have any questions or concerns,
     please feel free to contact me at the email address provided above.
  ***************************************************************************************   
-    First implementation of MereTDD
+    << OTHER DESCRIPTIONS >>
  **************************************************************************************/
 
 #include "../test.h"
-
-TEST("Test can be created")
-{
-}
-
-TEST("Test with throw can be created")
-{
-	throw 1;
-}
 
