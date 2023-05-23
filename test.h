@@ -13,7 +13,7 @@
  **************************************************************************************/
 #pragma once
 
-#include <iostream>
+#include <ostream>
 #include <string_view>
 #include <vector>
 
@@ -64,10 +64,20 @@ namespace MereTDD
 		return tests;
 	}
 
-	inline void run_tests()
+	inline int run_tests(std::ostream& output)
 	{
+		output << "Running "
+				  << get_tests().size()
+				  << " tests\n";
+
+		int num_passed = 0;
+		int num_failed = 0;
+
 		for (auto* test: get_tests())
 		{
+			output << "----------------\n"
+					  << test->name()
+					  << std::endl;
 			try
 			{
 				test->run();
@@ -76,16 +86,52 @@ namespace MereTDD
 			{
 				test->set_failed("Unexpected exception thrown.");
 			}
+
+			if (test->passed())
+			{
+				++num_passed;
+				output << "Passed" << std::endl;
+			}
+			else
+			{
+				++num_failed;
+				output << "Failed\n"
+						  << test->reason()
+						  << std::endl;
+			}
 		}
+
+		output << "-----------------\n";
+
+		if (num_failed == 0)
+		{
+			output << "All tests passed." << std::endl;
+		}
+		else
+		{
+			output << "Tests passed: " << num_passed
+					  << "\nTests failed: " << num_failed
+					  << std::endl;
+		}
+
+		return num_failed;
 	}
 }
 
+#define MERETDD_CLASS_FINAL(line) Test ## line
+#define MERETDD_CLASS_RELAY(line) MERETDD_CLASS_FINAL(line)
+#define MERETDD_CLASS MERETDD_CLASS_RELAY(__LINE__)
 
-#define TEST \
-class Test : public MereTDD::TestBase \
+#define MERETDD_INSTANCE_FINAL(line) test ## line
+#define MERETDD_INSTANCE_RELAY(line) MERETDD_INSTANCE_FINAL(line)
+#define MERETDD_INSTANCE MERETDD_INSTANCE_RELAY(__LINE__)
+
+
+#define TEST(test_name) \
+class MERETDD_CLASS : public MereTDD::TestBase \
 {            \
 public:      \
-    Test (std::string_view name)              \
+    MERETDD_CLASS (std::string_view name)              \
         : TestBase(name)                      \
         {          \
             MereTDD::get_tests().push_back(this); \
@@ -93,5 +139,5 @@ public:      \
 \
         void run() override;                     \
 };           \
-Test test("testCanBeCreated");             \
-void Test::run()
+MERETDD_CLASS MERETDD_INSTANCE(test_name);\
+void MERETDD_CLASS::run()

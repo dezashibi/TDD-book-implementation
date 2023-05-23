@@ -14,8 +14,12 @@
 
 #include "../test.h"
 
-TEST
+TEST("Test can be created")
 {
-	std::cout << name() << std::endl;
+}
+
+TEST("Test with throw can be created")
+{
+	throw 1;
 }
 

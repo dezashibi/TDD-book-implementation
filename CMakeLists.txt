@@ -3,5 +3,4 @@ project(tdd_book)
 
 set(CMAKE_CXX_STANDARD 20)
 
-file(GLOB_RECURSE SOURCES "tests/*.cpp")
-add_executable(${PROJECT_NAME} main.cpp ${SOURCES})
+add_subdirectory(tests)
