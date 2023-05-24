@@ -1,0 +1,23 @@
+
+C	cpp:S1068c""private field 'm_line' is not used(µ™É†üÿÿÿÿ8˜Ñ÷Â„1
+F	cpp:S3656-"+Member variables should not be "protected".(Œ·Ó:8¡ÂÂ„1
+P	cpp:S17090"/Add the "explicit" keyword to this constructor.(Ûµø°úÿÿÿÿ8•øÔÂ„1
+r	cpp:S2387c"QField "m_line" shadows a field of the same name in base class "ConfirmException".(µ™É†üÿÿÿÿ8šë¦Ã„1
+ÿ	cpp:S3624g"âExplicitly define or delete the missing copy constructor and copy assignment operator so that they will not be implicitly provided. Additionally, you may consider defining the move assignment operator and the move constructor.(¶‡×8Í®¦Æ„1
+e	cpp:S4963g"IRemove this class' destructor so that the class follows the rule of Zero.(¶‡×8Í®¦Æ„1
+P	cpp:S6018w"4Use inline variables to define this global variable.(¨è±’8šàüŞ„1
+u	cpp:S6045u"TUse the transparent comparator "std::less<>" with this associative string container.(ÿÌÛ£ûÿÿÿÿ8ÌÓûŞ„1
+p	cpp:S6045w"TUse the transparent comparator "std::less<>" with this associative string container.(¨è±’8›àüŞ„1
+P	cpp:S6018~"4Use inline variables to define this global variable.(Í¥»‘8å›€ß„1
+u	cpp:S6045|"TUse the transparent comparator "std::less<>" with this associative string container.(áé½Ïøÿÿÿÿ8æ›€ß„1
+p	cpp:S6045~"TUse the transparent comparator "std::less<>" with this associative string container.(Í¥»‘8æ›€ß„1
+^	cpp:S6011ˆ"ADirectly pass the arguments for object creation to this function.(äÒéà8Àñˆß„1
+c	cpp:S6011“"ADirectly pass the arguments for object creation to this function.(´¢°‰şÿÿÿÿ8şàß„1
+¥	cpp:S1242ğ"‡Rename this member function so that it doesn't hide an inherited non-virtual function, or make it virtual in the base class "TestBase".(‹Ê§æ8ƒ¯¢ß„1
+¥	cpp:S1242ë"‡Rename this member function so that it doesn't hide an inherited non-virtual function, or make it virtual in the base class "TestBase".(­ßúÓ8Ë·¡ß„1
+L	cpp:S3471ä"/Use "override" or "final" instead of "virtual".(êá±é8œäß„1
+Q	cpp:S3471é"/Use "override" or "final" instead of "virtual".(§±×úÿÿÿÿ8Ë·¡ß„1
+v	cpp:S1186ª"YAdd a nested comment explaining why this method is empty, or complete the implementation.(Äé†ˆ8”ÅÃà„1
+D	cpp:S2738Ì"""catch" a specific exception type.(àîïÅşÿÿÿÿ8ÑÓûŞ„1
+D	cpp:S2738—"""catch" a specific exception type.(àîïÅşÿÿÿÿ8ØñØß„1
+M	cpp:S1066æ"1Merge this "if" statement with the enclosing one.(æ›ºE8ÛÁñß„1
